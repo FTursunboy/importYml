@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('categories', function (Blueprint $table) {
-            $table->id();
+            $table->integer('id')->unique();
             $table->string('title');
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->timestamps();

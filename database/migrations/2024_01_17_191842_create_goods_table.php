@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('goods', function (Blueprint $table) {
             $table->id();
-            $table->string('good_import_id');
+            $table->string('good_import_id')->unique();
             $table->string('name');
             $table->string('url');
             $table->integer('price');

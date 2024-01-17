@@ -2,10 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\YmlExport;
+
+use App\Models\Category;
+use App\Models\Good;
+use App\Services\Contracts\ImportDbInterface;
+use Illuminate\Support\Facades\Http;
+
 class ImportToDb
 {
- public function __invoke()
- {
-     // TODO: Implement __invoke() method.
- }
+    public function __invoke(ImportDbInterface $service)
+    {
+        $result = $service->import();
+
+        return redirect()->back();
+    }
+
 }

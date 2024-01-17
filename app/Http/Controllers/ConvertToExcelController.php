@@ -4,44 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Exports\GoodExport;
 use App\Exports\YmlExport;
+use App\Services\Contracts\ImportExcelInterface;
 use Illuminate\Support\Facades\Http;
 use JetBrains\PhpStorm\NoReturn;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ConvertToExcelController extends Controller
 {
-    public function __invoke()
+    public function __invoke(ImportExcelInterface $service)
     {
-        $response = Http::timeout(60)->get('https://quarta-hunt.ru/bitrix/catalog_export/export_Ngq.xml');
-        $xml = simplexml_load_string($response->body());
-
-        $offers = collect();
-        $categories = collect();
-
-        foreach ($xml->shop->offers->offer as $offer) {
-
-            $offers->push([
-                'id' => $offer->attributes()['id'],
-                'name' => $offer->name,
-                'available' => $offer->attributes()['available'],
-                'price' => $offer->price,
-                'old_price' => $offer->oldprice,
-                'currencyId' => $offer->currencyId,
-                'url' => $offer->url,
-                'categoryId' => $offer->categoryId,
-                'picture' => $offer->picture,
-                'vendor' => $offer->vendor
-            ]);
-
-            $categoryId = (int)$offer->categoryId;
-
-            $categories->push([
-                'id' => $categoryId,
-                'name' => $xml->shop->categories->xpath("//category[@id='$categoryId']")[0],
-            ]);
-
+        $data = $service->import();
+        if (!$data) {
+            return 1;
         }
 
-        return Excel::download(new YmlExport($offers, $categories), 'goods-export.xlsx');
+        return Excel::download(new YmlExport($data['offers'], $data['categories']), 'goods-export.xlsx');
     }
 }
