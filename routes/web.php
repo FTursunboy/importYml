@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/excel', \App\Http\Controllers\ConvertToExcelController::class);
+Route::get('/mysql', \App\Http\Controllers\ImportToDb::class);
 
 Route::get('/', function () {
     return view('welcome');

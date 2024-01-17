@@ -4,9 +4,10 @@ namespace App\Services;
 
 use Maatwebsite\Excel\Excel;
 
-class ConvertToExcelService
+class ImportToDb
 {
- public function ff() {
+    public function ff()
+    {
 
- }
+    }
 }
