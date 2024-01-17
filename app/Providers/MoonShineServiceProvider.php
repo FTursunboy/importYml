@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\MoonShine\Resources\CategoriesResource;
+use App\MoonShine\Resources\GoodResource;
 use MoonShine\Providers\MoonShineApplicationServiceProvider;
-use MoonShine\MoonShine;
-use MoonShine\Menu\MenuGroup;
 use MoonShine\Menu\MenuItem;
-use MoonShine\Resources\MoonShineUserResource;
-use MoonShine\Resources\MoonShineUserRoleResource;
 
 class MoonShineServiceProvider extends MoonShineApplicationServiceProvider
 {
@@ -26,8 +24,8 @@ class MoonShineServiceProvider extends MoonShineApplicationServiceProvider
     protected function menu(): array
     {
         return [
-            MenuItem::make('Категории', CategoriesResource::class),
-            MenuItem::make('Товары', GoodResource::class),
+           // MenuItem::make('Категории', new CategoriesResource()),
+            MenuItem::make('Товары', new GoodResource()),
         ];
     }
 
