@@ -15,7 +15,7 @@ class ConvertToExcelController extends Controller
     {
         $data = $service->import();
         if (!$data) {
-            return 1;
+            return redirect()->back()->with('error', 'error');
         }
 
         return Excel::download(new YmlExport($data['offers'], $data['categories']), 'goods-export.xlsx');

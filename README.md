@@ -19,4 +19,4 @@ php artisan key:generate
 
 php artisan migrate
 
-
+ in your browser: localhost:8080/admin

@@ -14,6 +14,9 @@ class ImportToDb
     public function __invoke(ImportDbInterface $service)
     {
         $result = $service->import();
+        if (!$result){
+            return redirect()->with('error', 'error');
+        }
 
         return redirect()->back();
     }
